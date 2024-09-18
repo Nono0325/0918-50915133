@@ -9,6 +9,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #ffefba, #ffffff); /* 漸變背景 */
         }
         .buttons {
             display: flex;
@@ -69,6 +70,7 @@
         </div>
     </div>
     <div class="result" id="result">請選擇你的手勢</div>
+    <div id="choice-display" class="result"></div>
     <div id="score">玩家得分：0，電腦得分：0</div>
 
     <!-- 重製按鈕 -->
@@ -103,11 +105,14 @@
             }
         }
 
-        function handleResult(result) {
+        function handleResult(result, player, computer) {
             const resultDiv = document.getElementById("result");
+            const choiceDisplay = document.getElementById("choice-display");
             const winSound = document.getElementById("win-sound");
             const loseSound = document.getElementById("lose-sound");
             const drawSound = document.getElementById("draw-sound");
+
+            choiceDisplay.textContent = `玩家出: ${player}, 電腦出: ${computer}`;
 
             if (result === "win") {
                 playerScore++;
@@ -145,7 +150,7 @@
                 const playerSelection = button.id;
                 const computerSelection = computerChoice();
                 const result = determineWinner(playerSelection, computerSelection);
-                handleResult(result);
+                handleResult(result, playerSelection, computerSelection);
             });
         });
 
@@ -158,6 +163,7 @@
             document.getElementById("score").textContent = `玩家得分：${playerScore}，電腦得分：${computerScore}`;
             document.getElementById("result").textContent = "請選擇你的手勢";
             document.getElementById("result").className = "result";
+            document.getElementById("choice-display").textContent = "";
         }
     </script>
 </body>
